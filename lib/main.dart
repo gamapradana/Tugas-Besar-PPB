@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'pages/barter_offers_page.dart';
+import 'pages/borrowing_offers_page.dart';
 
 void main() {
   runApp(const CyclefyApp());
@@ -19,7 +19,7 @@ class CyclefyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFFF7F8F3),
         useMaterial3: true,
       ),
-      home: const BarterOffersPage(),
+      home: const BorrowingOffersPage(),
     );
   }
 }
