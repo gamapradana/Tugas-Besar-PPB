@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'barter_request_page.dart';
+import '../data/request_store.dart';
+import '../models/request_record.dart';
 
 class BarterOffersPage extends StatelessWidget {
   const BarterOffersPage({super.key});
@@ -35,6 +36,36 @@ class BarterOffersPage extends StatelessWidget {
       'emoji': '🎒',
     },
   ];
+
+  Future<void> _openRequestForm(
+    BuildContext context,
+    Map<String, String> item,
+  ) async {
+    final result = await Navigator.pushNamed(
+      context,
+      '/barter-request',
+      arguments: item,
+    );
+
+    if (!context.mounted) return;
+
+    if (result is RequestRecord) {
+      RequestStore.add(result);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Permintaan barter terkirim. Cek di Riwayat.'),
+          action: SnackBarAction(
+            label: 'Lihat',
+            onPressed: () => Navigator.pushNamed(
+              context,
+              '/request-detail',
+              arguments: result,
+            ),
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -206,15 +237,7 @@ class BarterOffersPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      BarterRequestPage(item: item),
-                                ),
-                              );
-                            },
+                            onPressed: () => _openRequestForm(context, item),
                             child: const Text('Ajukan Barter'),
                           ),
                         ),
