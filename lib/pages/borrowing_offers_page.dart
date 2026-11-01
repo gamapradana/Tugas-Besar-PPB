@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'borrowing_request_page.dart';
+
 class BorrowingOffersPage extends StatelessWidget {
   const BorrowingOffersPage({super.key});
 
@@ -256,15 +258,22 @@ class BorrowingOffersPage extends StatelessWidget {
                             ),
 
                             onPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Kamu memilih ${item['name']}'),
-                                  duration: const Duration(seconds: 2),
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      BorrowingRequestPage(item: item),
                                 ),
                               );
                             },
 
-                            child: const Text('Ajukan Peminjaman'),
+                            child: const Text(
+                              'Ajukan Peminjaman',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ),
                         ),
                       ],
