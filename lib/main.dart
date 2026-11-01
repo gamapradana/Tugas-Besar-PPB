@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'pages/barter_offers_page.dart';
 import 'pages/borrowing_offers_page.dart';
 
 void main() {
@@ -15,7 +14,9 @@ class CyclefyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Cyclefy',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF477A55)),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF477A55),
+        ),
         scaffoldBackgroundColor: const Color(0xFFF7F8F3),
         useMaterial3: true,
       ),
