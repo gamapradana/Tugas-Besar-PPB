@@ -1,41 +1,40 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
+import '../models/request_record.dart';
+
+/// Dibuka lewat named route '/borrowing-request'.
+/// Barang yang dipilih diterima lewat `arguments`.
 class BorrowingRequestPage extends StatefulWidget {
-  final Map<String, String> item;
-
-  const BorrowingRequestPage({
-    super.key,
-    required this.item,
-  });
+  const BorrowingRequestPage({super.key});
 
   @override
-  State<BorrowingRequestPage> createState() =>
-      _BorrowingRequestPageState();
+  State<BorrowingRequestPage> createState() => _BorrowingRequestPageState();
 }
 
-class _BorrowingRequestPageState
-    extends State<BorrowingRequestPage> {
+class _BorrowingRequestPageState extends State<BorrowingRequestPage> {
+  final TextEditingController durationController = TextEditingController();
+  final TextEditingController purposeController = TextEditingController();
+  final TextEditingController messageController = TextEditingController();
 
-  final TextEditingController durationController =
-      TextEditingController();
+  void showMessage(String text) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(text)),
+    );
+  }
 
-  final TextEditingController purposeController =
-      TextEditingController();
+  void sendRequest(Map<String, String> item) {
+    final days = int.tryParse(durationController.text.trim());
+    // Durasi maksimum dari penawaran, mis. "3 Hari" -> 3
+    final maxDays = int.tryParse(item['duration']!.split(' ').first) ?? 0;
 
-  final TextEditingController messageController =
-      TextEditingController();
+    if (days == null || days <= 0 || purposeController.text.trim().isEmpty) {
+      showMessage('Durasi dan tujuan peminjaman wajib diisi!');
+      return;
+    }
 
-  void sendRequest() {
-    if (durationController.text.trim().isEmpty ||
-        purposeController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Durasi dan tujuan peminjaman wajib diisi!',
-          ),
-        ),
-      );
+    if (maxDays > 0 && days > maxDays) {
+      showMessage('Durasi maksimum untuk barang ini $maxDays hari.');
       return;
     }
 
@@ -45,14 +44,25 @@ class _BorrowingRequestPageState
         return AlertDialog(
           title: const Text('Permintaan Berhasil'),
           content: Text(
-            'Permintaan peminjaman ${widget.item['name']} '
+            'Permintaan peminjaman ${item['name']} '
             'berhasil disiapkan.',
           ),
           actions: [
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(dialogContext);
-                Navigator.pop(context);
+                final record = RequestRecord(
+                  id: DateTime.now().millisecondsSinceEpoch.toString(),
+                  type: RequestType.borrowing,
+                  itemName: item['name']!,
+                  itemEmoji: item['emoji']!,
+                  owner: item['owner']!,
+                  durationDays: days,
+                  purpose: purposeController.text.trim(),
+                  message: messageController.text.trim(),
+                );
+
+                Navigator.pop(dialogContext); // tutup dialog
+                Navigator.pop(context, record); // kembali + kirim data
               },
               child: const Text('Selesai'),
             ),
@@ -72,6 +82,9 @@ class _BorrowingRequestPageState
 
   @override
   Widget build(BuildContext context) {
+    final item =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF477A55),
@@ -99,20 +112,14 @@ class _BorrowingRequestPageState
               const Text(
                 'Lengkapi informasi peminjaman barang '
                 'yang kamu butuhkan.',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 14,
-                ),
+                style: TextStyle(color: Colors.grey, fontSize: 14),
               ),
 
               const SizedBox(height: 25),
 
               const Text(
                 'Barang yang Dipilih',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
 
               const SizedBox(height: 10),
@@ -127,7 +134,7 @@ class _BorrowingRequestPageState
                 child: Row(
                   children: [
                     Text(
-                      widget.item['emoji']!,
+                      item['emoji']!,
                       style: const TextStyle(fontSize: 38),
                     ),
 
@@ -135,11 +142,10 @@ class _BorrowingRequestPageState
 
                     Expanded(
                       child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.item['name']!,
+                            item['name']!,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -149,7 +155,7 @@ class _BorrowingRequestPageState
                           const SizedBox(height: 5),
 
                           Text(
-                            'Pemilik: ${widget.item['owner']}',
+                            'Pemilik: ${item['owner']}',
                             style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 13,
@@ -159,8 +165,7 @@ class _BorrowingRequestPageState
                           const SizedBox(height: 5),
 
                           Text(
-                            'Durasi tersedia: '
-                            '${widget.item['duration']}',
+                            'Durasi tersedia: ${item['duration']}',
                             style: const TextStyle(
                               color: Color(0xFF477A55),
                               fontSize: 12,
@@ -177,10 +182,7 @@ class _BorrowingRequestPageState
 
               const Text(
                 'Durasi Peminjaman',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
 
               const SizedBox(height: 10),
@@ -188,11 +190,11 @@ class _BorrowingRequestPageState
               TextField(
                 controller: durationController,
                 keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
-                  hintText: 'Contoh: 2 hari',
-                  prefixIcon: const Icon(
-                    Icons.calendar_today_outlined,
-                  ),
+                  hintText: 'Contoh: 2',
+                  suffixText: 'hari',
+                  prefixIcon: const Icon(Icons.calendar_today_outlined),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -205,10 +207,7 @@ class _BorrowingRequestPageState
 
               const Text(
                 'Tujuan Peminjaman',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
 
               const SizedBox(height: 10),
@@ -231,10 +230,7 @@ class _BorrowingRequestPageState
 
               const Text(
                 'Pesan untuk Pemilik Barang',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
 
               const SizedBox(height: 10),
@@ -258,23 +254,18 @@ class _BorrowingRequestPageState
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: sendRequest,
+                  onPressed: () => sendRequest(item),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF477A55),
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                   child: const Text(
                     'Kirim Permintaan Peminjaman',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
