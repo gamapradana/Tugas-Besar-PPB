@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'pages/borrowing_offers_page.dart';
+
+import 'pages/barter_borrowing_shell.dart';
+import 'pages/barter_request_page.dart';
+import 'pages/borrowing_request_page.dart';
+import 'pages/request_detail_page.dart';
 
 void main() {
   runApp(const CyclefyApp());
@@ -14,13 +18,19 @@ class CyclefyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Cyclefy',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF477A55),
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF477A55)),
         scaffoldBackgroundColor: const Color(0xFFF7F8F3),
         useMaterial3: true,
       ),
-      home: const BorrowingOffersPage(),
+      // Named routes. Saat digabung dengan modul teman, tambahkan
+      // route mereka ('/login', '/home', dst.) ke map ini.
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const BarterBorrowingShell(),
+        '/barter-request': (context) => const BarterRequestPage(),
+        '/borrowing-request': (context) => const BorrowingRequestPage(),
+        '/request-detail': (context) => const RequestDetailPage(),
+      },
     );
   }
 }
