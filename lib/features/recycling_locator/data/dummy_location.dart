@@ -7,6 +7,8 @@ const List<RecyclingLocation> dummyLocation = [
     category: 'Plastik, kertas, kardus', 
     distance: '2.3 km', 
     isOpen: true,
+    description: 
+      'Bank sampah ini menerima jenis sampah daur ulang seperti plastik, kertas dan kardus'
     ),
   RecyclingLocation(
     name: 'Telu recycling center', 
@@ -14,6 +16,8 @@ const List<RecyclingLocation> dummyLocation = [
     category: 'Plastik, elektronik', 
     distance: '1.1 km', 
     isOpen: false,
+    description: 
+      'Bank sampah ini hanya menerima jenis sampah daur ulang seperti plastik dan elektronik'
     ),
     RecyclingLocation(
     name: 'Bank sampah Kotaku ', 
@@ -21,5 +25,7 @@ const List<RecyclingLocation> dummyLocation = [
     category: 'Plastik, kertas, kardus', 
     distance: '3.4 km', 
     isOpen: true,
+    description: 
+      'Bank sampah ini menerima jenis sampah daur ulang seperti plastik, kertas dan kardus'
     ),  
 ];

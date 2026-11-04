@@ -4,6 +4,7 @@
   final String category;
   final String distance;
   final bool isOpen;
+  final String description;
 
   const RecyclingLocation({
     required this.name,
@@ -11,5 +12,6 @@
     required this.category,
     required this.distance,
     required this.isOpen,
+    required this.description
   });
 }

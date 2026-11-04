@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'location_detail_page.dart';
 import '../../../core/constants/app_colors.dart';
 import '../data/dummy_location.dart';
 import '../models/recycling_location.dart';
@@ -276,6 +276,7 @@ class _RecyclingLocatorPageState extends State<RecyclingLocatorPage> {
   }
 }
 
+
 class _LocationCard extends StatelessWidget {
   final RecyclingLocation location;
 
@@ -291,82 +292,96 @@ class _LocationCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         side: const BorderSide(color: AppColors.gray100),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: AppColors.green100,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Icon(
-                Icons.recycling,
-                color: AppColors.green700,
-                size: 28,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LocationDetailPage(
+                location: location,
               ),
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    location.name,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.gray900,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    location.address,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: AppColors.gray600,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Menerima: ${location.category}',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: AppColors.gray600,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.location_on_outlined,
-                        size: 16,
-                        color: AppColors.green700,
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: AppColors.green100,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(
+                  Icons.recycling,
+                  color: AppColors.green700,
+                  size: 28,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      location.name,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.gray900,
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        location.distance,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: AppColors.gray600,
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      location.address,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: AppColors.gray600,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Menerima: ${location.category}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.gray600,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.location_on_outlined,
+                          size: 16,
+                          color: AppColors.green700,
                         ),
-                      ),
-                      const Spacer(),
-                      _StatusBadge(isOpen: location.isOpen),
-                    ],
-                  ),
-                ],
+                        const SizedBox(width: 4),
+                        Text(
+                          location.distance,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.gray600,
+                          ),
+                        ),
+                        const Spacer(),
+                        _StatusBadge(isOpen: location.isOpen),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
 
 class _StatusBadge extends StatelessWidget {
   final bool isOpen;
