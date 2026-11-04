@@ -1,4 +1,4 @@
-class RecyclingLocation {
+  class RecyclingLocation {
   final String name;
   final String address;
   final String category;
