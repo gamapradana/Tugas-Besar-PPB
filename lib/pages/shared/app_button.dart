@@ -6,8 +6,8 @@ import '../app_theme.dart';
 enum AppButtonVariant { primary, secondary, tertiary }
 
 
-/// - [onPressed] null tombol disabled (abu-abu).
-/// - [isLoading] true menampilkan spinner dan mengabaikan tap.
+/// - [onPressed] null  tombol disabled (abu-abu).
+/// - [isLoading] true   menampilkan spinner dan mengabaikan tap.
 class AppButton extends StatelessWidget {
   const AppButton({
     super.key,
