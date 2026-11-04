@@ -20,14 +20,14 @@ class AppColors {
   static const Color gray600 = Color(0xFF66736A); // teks sekunder
   static const Color gray900 = Color(0xFF202B23); // teks utama
 
-  // Warna semantik (selalu sertakan teks/ikon, jangan warna saja)
+
   static const Color success = Color(0xFF16A34A);
   static const Color warning = Color(0xFFDC9A20);
   static const Color error = Color(0xFFDC4545);
   static const Color info = Color(0xFF3182CE);
 }
 
-/// Token spacing (kelipatan 4 px), bagian 5.
+
 class AppSpacing {
   AppSpacing._();
 
@@ -40,11 +40,11 @@ class AppSpacing {
   static const double xl3 = 48; // jarak section besar
   static const double xl4 = 64; // jarak antar bagian halaman
 
-  /// Margin samping halaman pada mobile (bagian 4).
+
   static const double pageMargin = 16;
 }
 
-/// Token border radius, bagian 6.
+
 class AppRadius {
   AppRadius._();
 
@@ -59,17 +59,16 @@ class AppRadius {
 class AppSizes {
   AppSizes._();
 
-  /// Tinggi tombol standar 44-48 px (bagian 7.1).
+
   static const double buttonHeight = 48;
-  static const double iconSize = 20; // ikon standar 20 atau 24 px
+  static const double iconSize = 20; 
 }
 
-/// ThemeData aplikasi Cyclefy.
+
 class AppTheme {
   AppTheme._();
 
-  // Hierarki tipografi, bagian 3 (H1 32/700, H2 24/600, H3 20/600,
-  // H4 18/600, Body 16/400, Small 14/400, Caption 12/400).
+
   static const TextTheme _baseTextTheme = TextTheme(
     headlineLarge:
         TextStyle(fontSize: 32, fontWeight: FontWeight.w700, height: 1.25),
@@ -97,12 +96,12 @@ class AppTheme {
         TextStyle(fontSize: 12, fontWeight: FontWeight.w400, height: 1.3),
   );
 
-  static ThemeData light() {
-    final TextTheme textTheme = GoogleFonts.interTextTheme(
-      _baseTextTheme.apply(
-        bodyColor: AppColors.gray900,
-        displayColor: AppColors.gray900,
-      ),
+ static ThemeData light() {
+
+    final TextTheme textTheme = _baseTextTheme.apply(
+      fontFamily: GoogleFonts.inter().fontFamily,
+      bodyColor: AppColors.gray900,
+      displayColor: AppColors.gray900,
     );
 
     const ColorScheme colorScheme = ColorScheme.light(
@@ -148,7 +147,7 @@ class AppTheme {
       ),
       cardTheme: CardThemeData(
         color: AppColors.white,
-        elevation: 1, // shadow tipis
+        elevation: 1, 
         shadowColor: AppColors.gray900,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
@@ -180,7 +179,7 @@ class AppTheme {
         errorBorder: inputBorder(AppColors.error),
         focusedErrorBorder: inputBorder(AppColors.error, width: 2),
       ),
-      // Primary: Green 700, teks putih.
+
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           backgroundColor: AppColors.green700,
@@ -192,7 +191,7 @@ class AppTheme {
           textStyle: textTheme.labelLarge,
         ),
       ),
-      // Secondary: border Green 700, teks hijau.
+
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.green700,
@@ -210,7 +209,7 @@ class AppTheme {
           ),
         ),
       ),
-      // Tertiary: tanpa bidang warna, teks hijau.
+
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AppColors.green700,

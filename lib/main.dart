@@ -12,7 +12,7 @@ Future<void> main() async {
 }
 
 class CyclefyApp extends StatelessWidget {
-  /// [theme] hanya untuk pengujian; aplikasi memakai [AppTheme.light].
+  /// [theme] . [AppTheme.light].
   const CyclefyApp({super.key, this.theme});
 
   final ThemeData? theme;
