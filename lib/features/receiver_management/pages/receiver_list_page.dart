@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'receiver_form_page.dart';
 import '../../../core/constants/app_colors.dart';
 import '../data/dummy_receiver.dart';
@@ -14,6 +15,7 @@ class ReceiverListPage extends StatefulWidget {
 class _ReceiverListPageState extends State<ReceiverListPage> {
   final List<ReceiverLocation> receivers = List.from(dummyReceivers);
 
+  
   Future<void> _addReceiver() async {
     final result = await Navigator.push<ReceiverLocation>(
       context,
@@ -28,6 +30,42 @@ class _ReceiverListPageState extends State<ReceiverListPage> {
       });
     }
   }
+  
+  void _deleteReceiver(int index) {
+    final receiver = receivers[index];
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Hapus Lokasi'),
+          content: Text(
+            'Apakah kamu yakin ingin menghapus ${receiver.name}?',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Batal'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  receivers.removeAt(index);
+                });
+
+                Navigator.pop(context);
+              },
+              child: const Text(
+                'Hapus',
+                style: TextStyle(color: AppColors.error),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +188,7 @@ class _ReceiverListPageState extends State<ReceiverListPage> {
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 80),
+      padding: const EdgeInsets.all(16),
       itemCount: receivers.length,
       itemBuilder: (context, index) {
         final receiver = receivers[index];
@@ -158,6 +196,7 @@ class _ReceiverListPageState extends State<ReceiverListPage> {
         return _ReceiverCard(
           receiver: receiver,
           onEdit: () => _editReceiver(index),
+          onDelete: () => _deleteReceiver(index),
         );
       },
     );
@@ -210,8 +249,13 @@ class _SummaryCard extends StatelessWidget {
 class _ReceiverCard extends StatelessWidget {
   final ReceiverLocation receiver;
   final VoidCallback onEdit;
+  final VoidCallback onDelete;
 
-  const _ReceiverCard({required this.receiver, required this.onEdit});
+  const _ReceiverCard({
+    required this.receiver,
+    required this.onEdit,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -251,18 +295,19 @@ class _ReceiverCard extends StatelessWidget {
                   ),
                 ),
                 _ReceiverStatusBadge(status: receiver.status),
+                const SizedBox(width: 4),
+                IconButton(
+                  onPressed: onEdit,
+                  icon: const Icon(
+                    Icons.edit_outlined,
+                    color: AppColors.green700,
+                    size: 20,
+                  ),
+                  tooltip: 'Edit lokasi',
+                ),
               ],
             ),
-            const SizedBox(width: 4),
-            IconButton(
-              onPressed: onEdit,
-              icon: const Icon(
-                Icons.edit_outlined,
-                color: AppColors.green700,
-                size: 20,
-              ),
-              tooltip: 'Edit lokasi',
-            ),
+
             const SizedBox(height: 14),
             Text(
               receiver.address,
@@ -320,6 +365,15 @@ class _ReceiverCard extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            IconButton(
+              onPressed: onDelete,
+              icon: const Icon(
+                Icons.delete_outline,
+                color: AppColors.error,
+                size: 20,
+              ),
+              tooltip: 'Hapus lokasi',
             ),
           ],
         ),
