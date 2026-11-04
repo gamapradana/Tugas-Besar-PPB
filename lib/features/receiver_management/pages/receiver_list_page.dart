@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-
+import 'receiver_form_page.dart';
 import '../../../core/constants/app_colors.dart';
 import '../data/dummy_receiver.dart';
 import '../models/receiver_location.dart';
@@ -15,6 +14,21 @@ class ReceiverListPage extends StatefulWidget {
 class _ReceiverListPageState extends State<ReceiverListPage> {
   final List<ReceiverLocation> receivers = List.from(dummyReceivers);
 
+  Future<void> _addReceiver() async {
+    final result = await Navigator.push<ReceiverLocation>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ReceiverFormPage(),
+      ),
+    );
+
+    if (result != null) {
+      setState(() {
+        receivers.add(result);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,21 +42,32 @@ class _ReceiverListPageState extends State<ReceiverListPage> {
         children: [
           _buildHeader(),
           _buildSummary(),
-          Expanded(
-            child: _buildReceiverList(),
-          ),
+          Expanded(child: _buildReceiverList()),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          
-        },
+        onPressed: _addReceiver,
         backgroundColor: AppColors.green700,
         foregroundColor: AppColors.white,
         icon: const Icon(Icons.add),
         label: const Text('Tambah Lokasi'),
       ),
     );
+  }
+
+  Future<void> _editReceiver(int index) async {
+    final result = await Navigator.push<ReceiverLocation>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ReceiverFormPage(receiver: receivers[index]),
+      ),
+    );
+
+    if (result != null) {
+      setState(() {
+        receivers[index] = result;
+      });
+    }
   }
 
   Widget _buildHeader() {
@@ -64,10 +89,7 @@ class _ReceiverListPageState extends State<ReceiverListPage> {
           SizedBox(height: 8),
           Text(
             'Pantau dan kelola tempat penerimaan barang daur ulang.',
-            style: TextStyle(
-              fontSize: 13,
-              color: AppColors.white,
-            ),
+            style: TextStyle(fontSize: 13, color: AppColors.white),
           ),
         ],
       ),
@@ -122,9 +144,7 @@ class _ReceiverListPageState extends State<ReceiverListPage> {
       return const Center(
         child: Text(
           'Belum ada lokasi penerimaan.',
-          style: TextStyle(
-            color: AppColors.gray600,
-          ),
+          style: TextStyle(color: AppColors.gray600),
         ),
       );
     }
@@ -135,7 +155,10 @@ class _ReceiverListPageState extends State<ReceiverListPage> {
       itemBuilder: (context, index) {
         final receiver = receivers[index];
 
-        return _ReceiverCard(receiver: receiver);
+        return _ReceiverCard(
+          receiver: receiver,
+          onEdit: () => _editReceiver(index),
+        );
       },
     );
   }
@@ -164,11 +187,7 @@ class _SummaryCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            icon,
-            color: AppColors.green700,
-            size: 22,
-          ),
+          Icon(icon, color: AppColors.green700, size: 22),
           const SizedBox(height: 10),
           Text(
             value,
@@ -180,10 +199,7 @@ class _SummaryCard extends StatelessWidget {
           ),
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 11,
-              color: AppColors.gray600,
-            ),
+            style: const TextStyle(fontSize: 11, color: AppColors.gray600),
           ),
         ],
       ),
@@ -193,10 +209,9 @@ class _SummaryCard extends StatelessWidget {
 
 class _ReceiverCard extends StatelessWidget {
   final ReceiverLocation receiver;
+  final VoidCallback onEdit;
 
-  const _ReceiverCard({
-    required this.receiver,
-  });
+  const _ReceiverCard({required this.receiver, required this.onEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -222,10 +237,7 @@ class _ReceiverCard extends StatelessWidget {
                     color: AppColors.green100,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Icon(
-                    Icons.recycling,
-                    color: AppColors.green700,
-                  ),
+                  child: const Icon(Icons.recycling, color: AppColors.green700),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -238,18 +250,23 @@ class _ReceiverCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                _ReceiverStatusBadge(
-                  status: receiver.status,
-                ),
+                _ReceiverStatusBadge(status: receiver.status),
               ],
+            ),
+            const SizedBox(width: 4),
+            IconButton(
+              onPressed: onEdit,
+              icon: const Icon(
+                Icons.edit_outlined,
+                color: AppColors.green700,
+                size: 20,
+              ),
+              tooltip: 'Edit lokasi',
             ),
             const SizedBox(height: 14),
             Text(
               receiver.address,
-              style: const TextStyle(
-                fontSize: 13,
-                color: AppColors.gray600,
-              ),
+              style: const TextStyle(fontSize: 13, color: AppColors.gray600),
             ),
             const SizedBox(height: 10),
             Wrap(
@@ -314,9 +331,7 @@ class _ReceiverCard extends StatelessWidget {
 class _ReceiverStatusBadge extends StatelessWidget {
   final String status;
 
-  const _ReceiverStatusBadge({
-    required this.status,
-  });
+  const _ReceiverStatusBadge({required this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -342,10 +357,7 @@ class _ReceiverStatusBadge extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 5,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(20),
