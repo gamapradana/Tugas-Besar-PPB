@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'location_detail_page.dart';
 import '../../../core/constants/app_colors.dart';
 import '../data/dummy_location.dart';
@@ -63,8 +64,25 @@ class _RecyclingLocatorPageState extends State<RecyclingLocatorPage> {
           'Recycling Locator',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            tooltip: 'Notifikasi',
+            onPressed: () {
+              Navigator.pushNamed(context, '/notifications');
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.store),
+            tooltip: 'Receiver Management',
+            onPressed: () {
+              Navigator.pushNamed(context, '/receiver-management');
+            },
+          ),
+        ],
         elevation: 0,
       ),
+
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -276,7 +294,6 @@ class _RecyclingLocatorPageState extends State<RecyclingLocatorPage> {
   }
 }
 
-
 class _LocationCard extends StatelessWidget {
   final RecyclingLocation location;
 
@@ -298,9 +315,7 @@ class _LocationCard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => LocationDetailPage(
-                location: location,
-              ),
+              builder: (context) => LocationDetailPage(location: location),
             ),
           );
         },
@@ -381,7 +396,6 @@ class _LocationCard extends StatelessWidget {
     );
   }
 }
-
 
 class _StatusBadge extends StatelessWidget {
   final bool isOpen;
