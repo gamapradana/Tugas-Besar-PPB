@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../app_theme.dart';
 
-/// Varian tombol sesuai Design System bagian 7.1.
+
 enum AppButtonVariant { primary, secondary, tertiary }
 
-/// Tombol standar Cyclefy (tinggi 48 px, radius 8 px).
-///
-/// - [onPressed] null  -> tombol disabled (abu-abu).
-/// - [isLoading] true  -> menampilkan spinner dan mengabaikan tap.
+
+/// - [onPressed] null tombol disabled (abu-abu).
+/// - [isLoading] true menampilkan spinner dan mengabaikan tap.
 class AppButton extends StatelessWidget {
   const AppButton({
     super.key,
@@ -25,13 +24,13 @@ class AppButton extends StatelessWidget {
   final AppButtonVariant variant;
   final bool isLoading;
 
-  /// true = lebar penuh (default untuk form di mobile).
+
   final bool expanded;
   final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
-    // Saat loading, tombol tetap berwarna aktif tetapi tap diabaikan.
+ 
     final VoidCallback? handler = isLoading ? () {} : onPressed;
 
     final Widget child = isLoading
