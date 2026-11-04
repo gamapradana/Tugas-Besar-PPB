@@ -1,11 +1,42 @@
+
 import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../data/dummy_location.dart';
 import '../models/recycling_location.dart';
 
-class RecyclingLocatorPage extends StatelessWidget {
+class RecyclingLocatorPage extends StatefulWidget {
   const RecyclingLocatorPage({super.key});
+
+  @override
+  State<RecyclingLocatorPage> createState() =>
+      _RecyclingLocatorPageState();
+}
+
+class _RecyclingLocatorPageState extends State<RecyclingLocatorPage> {
+ 
+  final TextEditingController _searchController =
+      TextEditingController();
+
+
+  String searchQuery = '';
+
+
+  List<RecyclingLocation> get filteredLocations {
+    final query = searchQuery.trim().toLowerCase();
+
+    return dummyLocation.where((location) {
+      return location.name.toLowerCase().contains(query) ||
+          location.address.toLowerCase().contains(query) ||
+          location.category.toLowerCase().contains(query);
+    }).toList();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +62,9 @@ class RecyclingLocatorPage extends StatelessWidget {
               color: AppColors.gray900,
             ),
           ),
+
           const SizedBox(height: 8),
+
           const Text(
             'Temukan tempat untuk menyalurkan barang bekas '
             'agar dapat digunakan kembali.',
@@ -40,8 +73,61 @@ class RecyclingLocatorPage extends StatelessWidget {
               color: AppColors.gray600,
             ),
           ),
+
           const SizedBox(height: 20),
 
+          
+          TextField(
+            controller: _searchController,
+            onChanged: (value) {
+              setState(() {
+                searchQuery = value;
+              });
+            },
+            decoration: InputDecoration(
+              hintText: 'Cari lokasi daur ulang...',
+              prefixIcon: const Icon(
+                Icons.search,
+                color: AppColors.green700,
+              ),
+              suffixIcon: searchQuery.isNotEmpty
+                  ? IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () {
+                        setState(() {
+                          searchQuery = '';
+                          _searchController.clear();
+                        });
+                      },
+                    )
+                  : null,
+              filled: true,
+              fillColor: AppColors.white,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(
+                  color: AppColors.gray300,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(
+                  color: AppColors.gray300,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(
+                  color: AppColors.green700,
+                  width: 1.5,
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 20),
+
+         
           Container(
             height: 160,
             decoration: BoxDecoration(
@@ -88,16 +174,50 @@ class RecyclingLocatorPage extends StatelessWidget {
               color: AppColors.gray900,
             ),
           ),
+
           const SizedBox(height: 12),
 
-          ...dummyLocation.map(
-            (location) => _LocationCard(location: location),
-          ),
+          
+          if (filteredLocations.isEmpty)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 32),
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.search_off,
+                    size: 48,
+                    color: AppColors.gray600,
+                  ),
+                  SizedBox(height: 12),
+                  Text(
+                    'Lokasi tidak ditemukan',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.gray900,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'Coba gunakan kata kunci lainnya.',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: AppColors.gray600,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          else
+            ...filteredLocations.map(
+              (location) => _LocationCard(location: location),
+            ),
         ],
       ),
     );
   }
 }
+
 
 class _LocationCard extends StatelessWidget {
   final RecyclingLocation location;
@@ -132,6 +252,7 @@ class _LocationCard extends StatelessWidget {
                 size: 28,
               ),
             ),
+
             const SizedBox(width: 12),
 
             Expanded(
@@ -146,7 +267,9 @@ class _LocationCard extends StatelessWidget {
                       color: AppColors.gray900,
                     ),
                   ),
+
                   const SizedBox(height: 6),
+
                   Text(
                     location.address,
                     style: const TextStyle(
@@ -154,7 +277,9 @@ class _LocationCard extends StatelessWidget {
                       color: AppColors.gray600,
                     ),
                   ),
+
                   const SizedBox(height: 8),
+
                   Text(
                     'Menerima: ${location.category}',
                     style: const TextStyle(
@@ -162,7 +287,9 @@ class _LocationCard extends StatelessWidget {
                       color: AppColors.gray600,
                     ),
                   ),
+
                   const SizedBox(height: 8),
+
                   Row(
                     children: [
                       const Icon(
@@ -170,7 +297,9 @@ class _LocationCard extends StatelessWidget {
                         size: 16,
                         color: AppColors.green700,
                       ),
+
                       const SizedBox(width: 4),
+
                       Text(
                         location.distance,
                         style: const TextStyle(
@@ -178,7 +307,9 @@ class _LocationCard extends StatelessWidget {
                           color: AppColors.gray600,
                         ),
                       ),
+
                       const Spacer(),
+
                       _StatusBadge(isOpen: location.isOpen),
                     ],
                   ),
