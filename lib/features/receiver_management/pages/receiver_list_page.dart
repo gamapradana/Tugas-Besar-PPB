@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'receiver_form_page.dart';
-import '../../../core/constants/app_colors.dart';
+import '../../../pages/app_theme.dart';
 import '../data/dummy_receiver.dart';
 import '../models/receiver_location.dart';
 

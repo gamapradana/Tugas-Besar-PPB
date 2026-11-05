@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'location_detail_page.dart';
-import '../../../core/constants/app_colors.dart';
+import '../../../pages/app_theme.dart';
 import '../data/dummy_location.dart';
 import '../models/recycling_location.dart';
 
@@ -69,14 +70,14 @@ class _RecyclingLocatorPageState extends State<RecyclingLocatorPage> {
             icon: const Icon(Icons.notifications_outlined),
             tooltip: 'Notifikasi',
             onPressed: () {
-              Navigator.pushNamed(context, '/notifications');
+              context.push('/notifications');
             },
           ),
           IconButton(
             icon: const Icon(Icons.store),
             tooltip: 'Receiver Management',
             onPressed: () {
-              Navigator.pushNamed(context, '/receiver-management');
+              context.push('/receiver-management');
             },
           ),
         ],

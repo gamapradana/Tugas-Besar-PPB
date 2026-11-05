@@ -1,31 +1,33 @@
-import 'package:flutter/material.dart';
-import 'features/notifications/pages/notification_page.dart';
-import 'features/recycling_locator/pages/recycling_locator_page.dart';
-import 'features/receiver_management/pages/receiver_list_page.dart';
 
-void main() {
-  runApp(const CycleApp());
+import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'pages/app_router.dart';
+import 'pages/app_theme.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: '.env');
+
+  runApp(
+    const ProviderScope(
+      child: CyclefyApp(),
+    ),
+  );
 }
 
-class CycleApp extends StatelessWidget {
-  const CycleApp({super.key});
+class CyclefyApp extends ConsumerWidget {
+  const CyclefyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp.router(
       title: 'Cyclefy',
-      theme: ThemeData(
-        useMaterial3: true,
-        fontFamily: 'Inter',
-      ),
-      home: const RecyclingLocatorPage(),
-      routes: {
-        '/receiver-management': (context) =>
-            const ReceiverListPage(),
-        '/notifications': (context) => 
-            const NotificationPage(),
-      },
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light(),
+      routerConfig: ref.watch(routerProvider),
     );
   }
 }

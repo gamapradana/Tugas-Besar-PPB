@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/app_colors.dart';
+import '../../../pages/app_theme.dart';
 import '../data/dummy_notifications.dart';
 import '../models/notification_model.dart';
 

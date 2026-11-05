@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/app_colors.dart';
+import '../../../pages/app_theme.dart';
 import '../models/recycling_location.dart';
 
 class LocationDetailPage extends StatelessWidget {
