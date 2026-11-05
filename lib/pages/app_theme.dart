@@ -61,7 +61,7 @@ class AppSizes {
 
 
   static const double buttonHeight = 48;
-  static const double iconSize = 20; 
+  static const double iconSize = 20;
 }
 
 
@@ -147,7 +147,7 @@ class AppTheme {
       ),
       cardTheme: CardThemeData(
         color: AppColors.white,
-        elevation: 1, 
+        elevation: 1,
         shadowColor: AppColors.gray900,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(

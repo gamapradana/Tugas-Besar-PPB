@@ -2,6 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/recycling_locator/pages/recycling_locator_page.dart';
+import '../features/receiver_management/pages/receiver_list_page.dart';
+import '../features/notifications/pages/notification_page.dart';
+
 import '../data/auth_controller.dart';
 import 'auth/login_page.dart';
 import 'auth/register_page.dart';
@@ -49,15 +53,34 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/splash', builder: (_, __) => const SplashPage()),
       GoRoute(path: '/login', builder: (_, __) => const LoginPage()),
       GoRoute(path: '/register', builder: (_, __) => const RegisterPage()),
+      GoRoute(
+        path: '/recycling-locator',
+        builder: (_, __) => const RecyclingLocatorPage(),
+      ),
+      GoRoute(
+        path: '/receiver-management',
+        builder: (_, __) => const ReceiverListPage(),
+      ),
+      GoRoute(
+        path: '/notifications',
+        builder: (_, __) => const NotificationPage(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (_, __, shell) => MainShell(shell: shell),
         branches: [
-          StatefulShellBranch(routes: [
-            GoRoute(path: '/home', builder: (_, __) => const HomePage()),
-          ]),
-          StatefulShellBranch(routes: [
-            GoRoute(path: '/profile', builder: (_, __) => const ProfilePage()),
-          ]),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: '/home', builder: (_, __) => const HomePage()),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/profile',
+                builder: (_, __) => const ProfilePage(),
+              ),
+            ],
+          ),
         ],
       ),
       // Di luar shell agar bottom navigation tersembunyi saat mengedit.

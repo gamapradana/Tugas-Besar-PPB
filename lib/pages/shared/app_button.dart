@@ -30,7 +30,6 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
- 
     final VoidCallback? handler = isLoading ? () {} : onPressed;
 
     final Widget child = isLoading

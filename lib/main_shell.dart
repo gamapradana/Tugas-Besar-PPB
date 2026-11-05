@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import 'app_theme.dart';
+import 'pages/app_theme.dart';
 
 /// Kerangka navigasi utama (bottom navigation). Modul lain dapat menambah
 /// tab (Donasi, Barter, dst.) di sini dan di app_router.dart.
