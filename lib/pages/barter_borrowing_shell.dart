@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'app_theme.dart';
+
 import 'barter_offers_page.dart';
 import 'borrowing_offers_page.dart';
 import 'history_page.dart';
@@ -31,7 +33,7 @@ class _BarterBorrowingShellState extends State<BarterBorrowingShell> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (index) => setState(() => currentIndex = index),
-        selectedItemColor: const Color(0xFF477A55),
+        selectedItemColor: AppColors.green700,
         unselectedItemColor: Colors.grey,
         showUnselectedLabels: true,
         items: const [

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'app_theme.dart';
+
 import '../data/request_store.dart';
 import '../models/request_record.dart';
+import 'request_detail_page.dart';
 
 /// Riwayat permintaan barter & peminjaman (FR-19).
 /// Tab: Barter | Peminjaman. Filter status memakai ChoiceChip.
@@ -17,7 +20,13 @@ class _HistoryPageState extends State<HistoryPage> {
   RequestStatus? selectedStatus;
 
   Future<void> _openDetail(RequestRecord record) async {
-    await Navigator.pushNamed(context, '/request-detail', arguments: record);
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        settings: RouteSettings(arguments: record),
+        builder: (_) => const RequestDetailPage(),
+      ),
+    );
     // Status bisa berubah di halaman detail -> refresh daftar.
     if (mounted) setState(() {});
   }
@@ -28,7 +37,7 @@ class _HistoryPageState extends State<HistoryPage> {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF477A55),
+          backgroundColor: AppColors.green900,
           foregroundColor: Colors.white,
           title: const Text(
             'Riwayat Permintaan',
@@ -138,7 +147,7 @@ class _HistoryPageState extends State<HistoryPage> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFFE5E9E2)),
+              border: Border.all(color: AppColors.gray300),
             ),
             child: Row(
               children: [
@@ -146,7 +155,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   width: 56,
                   height: 56,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEAF1E8),
+                    color: AppColors.green100,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Center(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'app_theme.dart';
+
 import '../models/request_record.dart';
 
 /// Dibuka lewat named route '/barter-request'.
@@ -72,7 +74,7 @@ class _BarterRequestPageState extends State<BarterRequestPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF477A55),
+        backgroundColor: AppColors.green900,
         foregroundColor: Colors.white,
         title: const Text('Permintaan Barter'),
       ),
@@ -88,7 +90,7 @@ class _BarterRequestPageState extends State<BarterRequestPage> {
                 style: TextStyle(
                   fontSize: 23,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF294D35),
+                  color: AppColors.gray900,
                 ),
               ),
 
@@ -112,7 +114,7 @@ class _BarterRequestPageState extends State<BarterRequestPage> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEAF1E8),
+                  color: AppColors.green100,
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Row(
@@ -199,7 +201,7 @@ class _BarterRequestPageState extends State<BarterRequestPage> {
                 child: ElevatedButton(
                   onPressed: () => sendRequest(item),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF477A55),
+                    backgroundColor: AppColors.green700,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     shape: RoundedRectangleBorder(

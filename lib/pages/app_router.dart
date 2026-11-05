@@ -10,6 +10,8 @@ import '../data/auth_controller.dart';
 import 'auth/login_page.dart';
 import 'auth/register_page.dart';
 import 'home/home_page.dart';
+import 'main_navigation.dart';
+import 'barter_borrowing_shell.dart';
 import 'main_shell.dart';
 import 'profile/edit_profile_page.dart';
 import 'profile/profile_page.dart';
@@ -64,6 +66,16 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/notifications',
         builder: (_, _) => const NotificationPage(),
+      ),
+      // Modul dengan navigasi internal diletakkan di luar StatefulShellRoute
+      // agar navbar global Beranda/Profil tidak tampil bertumpuk.
+      GoRoute(
+        path: '/barter',
+        builder: (_, _) => const BarterBorrowingShell(),
+      ),
+      GoRoute(
+        path: '/items',
+        builder: (_, _) => const MainNavigation(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (_, _, shell) => MainShell(shell: shell),

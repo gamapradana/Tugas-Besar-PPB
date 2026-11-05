@@ -72,7 +72,7 @@ class _ReceiverListPageState extends State<ReceiverListPage> {
     return Scaffold(
       backgroundColor: AppColors.gray50,
       appBar: AppBar(
-        backgroundColor: AppColors.green700,
+        backgroundColor: AppColors.green900,
         foregroundColor: AppColors.white,
         title: const Text('Receiver Management'),
       ),
@@ -112,7 +112,7 @@ class _ReceiverListPageState extends State<ReceiverListPage> {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
-      color: AppColors.green700,
+      color: AppColors.green900,
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

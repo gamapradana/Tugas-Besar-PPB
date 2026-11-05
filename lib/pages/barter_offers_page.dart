@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'app_theme.dart';
+
 import '../data/request_store.dart';
 import '../models/request_record.dart';
+import 'barter_request_page.dart';
+import 'request_detail_page.dart';
 
 class BarterOffersPage extends StatelessWidget {
   const BarterOffersPage({super.key});
@@ -41,10 +45,12 @@ class BarterOffersPage extends StatelessWidget {
     BuildContext context,
     Map<String, String> item,
   ) async {
-    final result = await Navigator.pushNamed(
+    final result = await Navigator.push(
       context,
-      '/barter-request',
-      arguments: item,
+      MaterialPageRoute(
+        settings: RouteSettings(arguments: item),
+        builder: (_) => const BarterRequestPage(),
+      ),
     );
 
     if (!context.mounted) return;
@@ -56,10 +62,12 @@ class BarterOffersPage extends StatelessWidget {
           content: const Text('Permintaan barter terkirim. Cek di Riwayat.'),
           action: SnackBarAction(
             label: 'Lihat',
-            onPressed: () => Navigator.pushNamed(
+            onPressed: () => Navigator.push(
               context,
-              '/request-detail',
-              arguments: result,
+              MaterialPageRoute(
+                settings: RouteSettings(arguments: result),
+                builder: (_) => const RequestDetailPage(),
+              ),
             ),
           ),
         ),
@@ -71,7 +79,7 @@ class BarterOffersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF477A55),
+        backgroundColor: AppColors.green900,
         foregroundColor: Colors.white,
         title: const Row(
           children: [
@@ -97,7 +105,7 @@ class BarterOffersPage extends StatelessWidget {
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
-              color: const Color(0xFF477A55),
+              color: AppColors.green700,
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -128,7 +136,7 @@ class BarterOffersPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 19,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF294D35),
+                      color: AppColors.gray900,
                     ),
                   ),
                   Text(
@@ -151,7 +159,7 @@ class BarterOffersPage extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: const Color(0xFFE5E9E2)),
+                      border: Border.all(color: AppColors.gray300),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,7 +171,7 @@ class BarterOffersPage extends StatelessWidget {
                               width: 95,
                               height: 100,
                               decoration: BoxDecoration(
-                                color: const Color(0xFFEAF1E8),
+                                color: AppColors.green100,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Center(
@@ -208,14 +216,14 @@ class BarterOffersPage extends StatelessWidget {
                                       vertical: 5,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: const Color(0xFFEAF1E8),
+                                      color: AppColors.green100,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Text(
                                       'Ingin: ${item['wanted']}',
                                       style: const TextStyle(
                                         fontSize: 11,
-                                        color: Color(0xFF477A55),
+                                        color: AppColors.green700,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -230,7 +238,7 @@ class BarterOffersPage extends StatelessWidget {
                           width: double.infinity,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF477A55),
+                              backgroundColor: AppColors.green700,
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(vertical: 12),
                               shape: RoundedRectangleBorder(

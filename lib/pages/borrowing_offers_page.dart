@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'app_theme.dart';
+
 import '../data/request_store.dart';
 import '../models/request_record.dart';
+import 'borrowing_request_page.dart';
+import 'request_detail_page.dart';
 
 class BorrowingOffersPage extends StatelessWidget {
   const BorrowingOffersPage({super.key});
@@ -45,10 +49,12 @@ class BorrowingOffersPage extends StatelessWidget {
     BuildContext context,
     Map<String, String> item,
   ) async {
-    final result = await Navigator.pushNamed(
+    final result = await Navigator.push(
       context,
-      '/borrowing-request',
-      arguments: item,
+      MaterialPageRoute(
+        settings: RouteSettings(arguments: item),
+        builder: (_) => const BorrowingRequestPage(),
+      ),
     );
 
     if (!context.mounted) return;
@@ -62,10 +68,12 @@ class BorrowingOffersPage extends StatelessWidget {
           ),
           action: SnackBarAction(
             label: 'Lihat',
-            onPressed: () => Navigator.pushNamed(
+            onPressed: () => Navigator.push(
               context,
-              '/request-detail',
-              arguments: result,
+              MaterialPageRoute(
+                settings: RouteSettings(arguments: result),
+                builder: (_) => const RequestDetailPage(),
+              ),
             ),
           ),
         ),
@@ -77,7 +85,7 @@ class BorrowingOffersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF477A55),
+        backgroundColor: AppColors.green900,
         foregroundColor: Colors.white,
         title: const Row(
           children: [
@@ -99,7 +107,7 @@ class BorrowingOffersPage extends StatelessWidget {
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
-              color: const Color(0xFF477A55),
+              color: AppColors.green700,
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -132,7 +140,7 @@ class BorrowingOffersPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 19,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF294D35),
+                      color: AppColors.gray900,
                     ),
                   ),
                   Text(
@@ -157,7 +165,7 @@ class BorrowingOffersPage extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: const Color(0xFFE5E9E2)),
+                      border: Border.all(color: AppColors.gray300),
                     ),
 
                     child: Column(
@@ -171,7 +179,7 @@ class BorrowingOffersPage extends StatelessWidget {
                               width: 95,
                               height: 100,
                               decoration: BoxDecoration(
-                                color: const Color(0xFFEAF1E8),
+                                color: AppColors.green100,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Center(
@@ -225,14 +233,14 @@ class BorrowingOffersPage extends StatelessWidget {
                                       vertical: 5,
                                     ),
                                     decoration: BoxDecoration(
-                                      color: const Color(0xFFEAF1E8),
+                                      color: AppColors.green100,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Text(
                                       'Durasi: ${item['duration']}',
                                       style: const TextStyle(
                                         fontSize: 11,
-                                        color: Color(0xFF477A55),
+                                        color: AppColors.green700,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -250,7 +258,7 @@ class BorrowingOffersPage extends StatelessWidget {
                           width: double.infinity,
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF7F8F3),
+                            color: AppColors.gray50,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Row(
@@ -259,7 +267,7 @@ class BorrowingOffersPage extends StatelessWidget {
                               const Icon(
                                 Icons.info_outline,
                                 size: 18,
-                                color: Color(0xFF477A55),
+                                color: AppColors.green700,
                               ),
                               const SizedBox(width: 8),
                               Expanded(
@@ -282,7 +290,7 @@ class BorrowingOffersPage extends StatelessWidget {
                           width: double.infinity,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF477A55),
+                              backgroundColor: AppColors.green700,
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(vertical: 12),
                               shape: RoundedRectangleBorder(

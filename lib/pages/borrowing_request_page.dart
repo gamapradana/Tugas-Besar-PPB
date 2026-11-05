@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'app_theme.dart';
 import 'package:flutter/services.dart';
 
 import '../models/request_record.dart';
@@ -87,7 +89,7 @@ class _BorrowingRequestPageState extends State<BorrowingRequestPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF477A55),
+        backgroundColor: AppColors.green900,
         foregroundColor: Colors.white,
         title: const Text('Permintaan Peminjaman'),
       ),
@@ -103,7 +105,7 @@ class _BorrowingRequestPageState extends State<BorrowingRequestPage> {
                 style: TextStyle(
                   fontSize: 23,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF294D35),
+                  color: AppColors.gray900,
                 ),
               ),
 
@@ -128,7 +130,7 @@ class _BorrowingRequestPageState extends State<BorrowingRequestPage> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFEAF1E8),
+                  color: AppColors.green100,
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Row(
@@ -167,7 +169,7 @@ class _BorrowingRequestPageState extends State<BorrowingRequestPage> {
                           Text(
                             'Durasi tersedia: ${item['duration']}',
                             style: const TextStyle(
-                              color: Color(0xFF477A55),
+                              color: AppColors.green700,
                               fontSize: 12,
                             ),
                           ),
@@ -256,7 +258,7 @@ class _BorrowingRequestPageState extends State<BorrowingRequestPage> {
                 child: ElevatedButton(
                   onPressed: () => sendRequest(item),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF477A55),
+                    backgroundColor: AppColors.green700,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     shape: RoundedRectangleBorder(
