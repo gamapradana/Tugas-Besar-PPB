@@ -40,7 +40,7 @@ Cyclefy bertujuan untuk mendorong kebiasaan penggunaan barang secara berkelanjut
 - **Flutter** – Framework pengembangan aplikasi mobile.
 - **Dart** – Bahasa pemrograman utama.
 - **Git & GitHub** – Version control dan kolaborasi pengembangan.
-- **REST API** – Konsep integrasi komunikasi antara aplikasi dan backend.
+
 
 
 **Catatan:** Beberapa fitur pada versi pengembangan ini masih menggunakan dummy data atau penyimpanan lokal dan belum sepenuhnya terintegrasi dengan backend.
