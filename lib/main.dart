@@ -1,36 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'pages/barter_borrowing_shell.dart';
-import 'pages/barter_request_page.dart';
-import 'pages/borrowing_request_page.dart';
-import 'pages/request_detail_page.dart';
+import 'pages/app_router.dart';
+import 'pages/app_theme.dart';
 
-void main() {
-  runApp(const CyclefyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: '.env');
+  runApp(const ProviderScope(child: CyclefyApp()));
 }
 
-class CyclefyApp extends StatelessWidget {
+class CyclefyApp extends ConsumerWidget {
   const CyclefyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp.router(
       title: 'Cyclefy',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF477A55)),
-        scaffoldBackgroundColor: const Color(0xFFF7F8F3),
-        useMaterial3: true,
-      ),
-      // Named routes. Saat digabung dengan modul teman, tambahkan
-      // route mereka ('/login', '/home', dst.) ke map ini.
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const BarterBorrowingShell(),
-        '/barter-request': (context) => const BarterRequestPage(),
-        '/borrowing-request': (context) => const BorrowingRequestPage(),
-        '/request-detail': (context) => const RequestDetailPage(),
-      },
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light(),
+      routerConfig: ref.watch(routerProvider),
     );
   }
 }
