@@ -22,7 +22,7 @@ class ItemCard extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         contentPadding: const EdgeInsets.all(12),
-        leading: ItemImage(path: item.imagePath, size: 58),
+        leading: ItemImage(url: item.imageUrl, size: 58),
         title: Text(
           item.name,
           style: const TextStyle(fontWeight: FontWeight.bold),
