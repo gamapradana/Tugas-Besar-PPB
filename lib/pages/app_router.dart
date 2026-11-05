@@ -18,7 +18,7 @@ import 'splash/splash_page.dart';
 /// Memberi tahu GoRouter agar mengevaluasi ulang redirect saat status login berubah.
 class _AuthRefresh extends ChangeNotifier {
   _AuthRefresh(Ref ref) {
-    ref.listen<AuthState>(authControllerProvider, (_, __) => notifyListeners());
+    ref.listen<AuthState>(authControllerProvider, (_, _) => notifyListeners());
   }
 }
 
@@ -50,34 +50,34 @@ final routerProvider = Provider<GoRouter>((ref) {
       };
     },
     routes: [
-      GoRoute(path: '/splash', builder: (_, __) => const SplashPage()),
-      GoRoute(path: '/login', builder: (_, __) => const LoginPage()),
-      GoRoute(path: '/register', builder: (_, __) => const RegisterPage()),
+      GoRoute(path: '/splash', builder: (_, _) => const SplashPage()),
+      GoRoute(path: '/login', builder: (_, _) => const LoginPage()),
+      GoRoute(path: '/register', builder: (_, _) => const RegisterPage()),
       GoRoute(
         path: '/recycling-locator',
-        builder: (_, __) => const RecyclingLocatorPage(),
+        builder: (_, _) => const RecyclingLocatorPage(),
       ),
       GoRoute(
         path: '/receiver-management',
-        builder: (_, __) => const ReceiverListPage(),
+        builder: (_, _) => const ReceiverListPage(),
       ),
       GoRoute(
         path: '/notifications',
-        builder: (_, __) => const NotificationPage(),
+        builder: (_, _) => const NotificationPage(),
       ),
       StatefulShellRoute.indexedStack(
-        builder: (_, __, shell) => MainShell(shell: shell),
+        builder: (_, _, shell) => MainShell(shell: shell),
         branches: [
           StatefulShellBranch(
             routes: [
-              GoRoute(path: '/home', builder: (_, __) => const HomePage()),
+              GoRoute(path: '/home', builder: (_, _) => const HomePage()),
             ],
           ),
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: '/profile',
-                builder: (_, __) => const ProfilePage(),
+                builder: (_, _) => const ProfilePage(),
               ),
             ],
           ),
@@ -86,7 +86,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       // Di luar shell agar bottom navigation tersembunyi saat mengedit.
       GoRoute(
         path: '/edit-profile',
-        builder: (_, __) => const EditProfilePage(),
+        builder: (_, _) => const EditProfilePage(),
       ),
     ],
   );
